@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "105423403557",
+    "firebase_url": "https://electronica-21.firebaseio.com",
+    "project_id": "electronica-21",
+    "storage_bucket": "electronica-21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105423403557:android:069e94dc5d9b1ec6ad5dcc",
+        "android_client_info": {
+          "package_name": "com.flutter.electronica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105423403557-0d1m58gaa28c1n4bl5m642b7s89bpnbu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutter.electronica",
+            "certificate_hash": "0961bc593ac3cdd8c78fc3c14116e4b805f8c9c0"
+          }
+        },
+        {
+          "client_id": "105423403557-vkeo20a1j75itp10stf4m5t8ajt2jb37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALXSDBawuq--mT08Htaj9oBKP2NA3j9N0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105423403557-vkeo20a1j75itp10stf4m5t8ajt2jb37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

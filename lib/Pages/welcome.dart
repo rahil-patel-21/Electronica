@@ -1,3 +1,7 @@
+import 'package:electronica/firebase%20stuffs/authController.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import '../Animation/FadeAnimation.dart';
 import '../Pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +14,26 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage>
     with TickerProviderStateMixin {
-  static String get routeName => '@routes/home-page';
   AnimationController _scaleController;
 
   bool hide = false;
+
+  void _signInWithGoogle(BuildContext context) async {
+    try {
+      final authBase = Provider.of<AuthBase>(context, listen: false);
+      await authBase.signInWithGoogle();
+    } on PlatformException catch (e) {
+      if (e.code != 'ERROR_ABORTED_BY_USER') {
+        // _signInErrors(context, e);
+      }
+    }
+  }
+
+  // void _signInErrors(
+  //     BuildContext context, PlatformException platformException) {
+  //   PlatformExceptionAlert(
+  //       title: 'Sign In Failed !', platformException: platformException);
+  // }
 
   @override
   void initState() {
@@ -83,8 +103,7 @@ class _WelcomePageState extends State<WelcomePage>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: InkWell(
-                          onTap: () => Navigator.of(context)
-                              .pushNamed(HomePage.routeName),
+                          onTap: () => _signInWithGoogle(context),
                           child: Container(
                             height: 50,
                             decoration: BoxDecoration(
@@ -102,23 +121,32 @@ class _WelcomePageState extends State<WelcomePage>
                         ),
                       ),
                     ),
+                    SizedBox(height: 8.0),
                     FadeAnimation(
                       1.7,
                       Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Center(
-                          child: Text(
-                            "Create Account",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                        child: Text("Terms & Conditions",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 13.0)),
                       ),
                     ),
+                    // FadeAnimation(
+                    //   1.7,
+                    //   Container(
+                    //     height: 50,
+                    //     decoration: BoxDecoration(
+                    //         border: Border.all(color: Colors.white),
+                    //         borderRadius: BorderRadius.circular(50)),
+                    //     child: Center(
+                    //       child: Text(
+                    //         "Create Account",
+                    //         style: TextStyle(
+                    //             color: Colors.white,
+                    //             fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ],

@@ -8,3 +8,5 @@ const List<String> searchingList = [
   'OnePlus 8',
   'OnePlus 8 Pro',
 ];
+
+const List<String> sliderList = ['Popular', 'Featured', 'Upcoming'];

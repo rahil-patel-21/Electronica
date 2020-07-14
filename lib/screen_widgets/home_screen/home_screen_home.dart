@@ -1,10 +1,13 @@
 import 'package:electronica/Animation/FadeAnimation.dart';
 import 'package:electronica/Pages/upi_testing.dart';
 import 'package:electronica/constants/product_list.dart';
+import 'package:electronica/firebase%20stuffs/fireStore_Controller.dart';
 import 'package:electronica/widget/categories.dart';
 import 'package:electronica/widget/main_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:provider/provider.dart';
 
 class HomeScreenHome extends StatefulWidget {
   @override
@@ -18,6 +21,17 @@ class _HomeScreenHomeState extends State<HomeScreenHome> {
   bool isCollapsed = false;
   bool isSearching = false;
   String searchedString = ' ';
+
+  @override
+  void initState() {
+    super.initState();
+    getList();
+  }
+
+  void getList() async {
+    final cloudBase = Provider.of<CloudBase>(context, listen: false);
+    cloudBase.productList();
+  }
 
   @override
   void dispose() {
@@ -45,7 +59,10 @@ class _HomeScreenHomeState extends State<HomeScreenHome> {
       top: 0.0,
       bottom: 0.0,
       child: Container(
-        decoration: BoxDecoration(color: Color(0xFF08080A)),
+        decoration: BoxDecoration(
+            //color: Color(0xFF08080A),
+            color: Color(0xFF121212),
+            borderRadius: BorderRadius.circular(15)),
         child: CustomScrollView(
           physics: ScrollPhysics(),
           slivers: <Widget>[
@@ -66,7 +83,9 @@ class _HomeScreenHomeState extends State<HomeScreenHome> {
                         decoration: InputDecoration(
                             suffix: GestureDetector(
                               onTap: () {
-                                searchController.clear();
+                                setState(() {
+                                  searchController.clear();
+                                });
                               },
                               child: Icon(Icons.clear),
                             ),
@@ -83,6 +102,7 @@ class _HomeScreenHomeState extends State<HomeScreenHome> {
                           icon: Icon(Icons.arrow_back, color: Colors.white),
                           onPressed: () => setState(() {
                                 isSearching = !isSearching;
+                                searchController.clear();
                               })))
                   : FadeAnimation(
                       1.0,
@@ -120,7 +140,9 @@ class _HomeScreenHomeState extends State<HomeScreenHome> {
             ),
             SliverList(
               delegate: SliverChildListDelegate([
-                Categories(),
+                Categories(
+                  isCollapsed: isCollapsed,
+                ),
               ]),
             )
           ],
@@ -179,6 +201,7 @@ class _HomeScreenHomeState extends State<HomeScreenHome> {
                               child: Icon(
                                 Icons.call_made,
                                 color: Colors.white70,
+                                size: 20,
                               ))
                         ],
                       ),

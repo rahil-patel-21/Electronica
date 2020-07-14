@@ -1,7 +1,10 @@
-import '../helpers/helper.dart';
+import 'package:electronica/Pages/product_list.dart';
+import 'package:electronica/app_state.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatefulWidget {
+  final bool isCollapsed;
+  Categories({@required this.isCollapsed}) : assert(isCollapsed != null);
   @override
   _CategoriesState createState() => _CategoriesState();
 }
@@ -11,7 +14,7 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
-    state(context).categories.forEach((f) {
+    AppState.categories.forEach((f) {
       _categoriesItems.add(Container(
         height: 150,
         child: Column(
@@ -36,13 +39,23 @@ class _CategoriesState extends State<Categories> {
                 scrollDirection: Axis.horizontal,
                 itemCount: f.items.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: index == 0
-                        ? EdgeInsets.only(left: 10.0)
-                        : EdgeInsets.only(left: 0.0),
-                    child: CategoryCard(
-                      image: f.items[index].image,
-                      title: f.items[index].title,
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductList(
+                                  categoryName: f.items[index].title,
+                                  categoryStock: f.items[index].stock,
+                                  categoryPhotoURL: f.items[index].image,
+                                ))),
+                    child: Container(
+                      margin: index == 0
+                          ? EdgeInsets.only(left: 10.0)
+                          : EdgeInsets.only(left: 0.0),
+                      child: CategoryCard(
+                        image: f.items[index].image,
+                        title: f.items[index].title,
+                      ),
                     ),
                   );
                 },
@@ -53,9 +66,14 @@ class _CategoriesState extends State<Categories> {
       ));
     });
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: _categoriesItems,
+    return Container(
+      decoration: BoxDecoration(
+        color: widget.isCollapsed ? Color(0xFF08080A) : Color(0xFF121212),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: _categoriesItems,
+      ),
     );
   }
 }
@@ -76,7 +94,7 @@ class CategoryCard extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image:
-                DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+                DecorationImage(image: NetworkImage(image), fit: BoxFit.cover)),
         child: Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
